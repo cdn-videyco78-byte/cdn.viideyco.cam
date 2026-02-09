@@ -1,28 +1,3 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Video</title>
-<style>
-html,body{margin:0;width:100%;height:100%;background:#000}
-#wrap{position:fixed;inset:0;background:#000}
-video{width:100%;height:100%;object-fit:contain;background:#000}
-#tap{
-  position:absolute;
-  inset:0;
-  z-index:10;
-  background:rgba(0,0,0,0.01);
-}
-</style>
-</head>
-<body>
-
-<div id="wrap">
-  <video id="vid" controls playsinline webkit-playsinline></video>
-  <div id="tap"></div>
-</div>
-
 <script>
 const DIRECT = "https://otieu.com/4/10426491";
 
@@ -38,24 +13,30 @@ function openAd(){
   }
 }
 
-// ambil ID dari URL
-const path = location.pathname.split("/").pop();
-if(!path){ document.body.innerHTML=""; }
+// ambil ID dari ?v=
+const params = new URLSearchParams(location.search);
+const id = params.get("v");
+if(!id){
+  document.body.innerHTML="";
+}
 
 // load videos.json
 fetch("/videos.json")
   .then(r=>r.json())
   .then(data=>{
-    const v = data.videos.find(x=>x.id===path);
-    if(!v){ document.body.innerHTML=""; return; }
+    const v = data.videos.find(x=>x.id === id);
+    if(!v){
+      document.body.innerHTML="";
+      return;
+    }
     vid.src = v.cdn;
   });
 
 // trigger ads
-tap.onclick = ()=>{ openAd(); vid.play().catch(()=>{}); };
+tap.onclick = ()=>{
+  openAd();
+  vid.play().catch(()=>{});
+};
 vid.addEventListener("play", openAd);
 vid.addEventListener("pause", openAd);
 </script>
-
-</body>
-</html>
