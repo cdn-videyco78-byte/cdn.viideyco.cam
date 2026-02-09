@@ -1,28 +1,16 @@
 {
-  "videos": [
-    {
-      "id": "test111",
-      "cdn": "https://cdn.videy.co/2Doz2QIm1.mp4"
-    },
-    {
-      "id": "memek111",
-      "cdn": "https://cdn.videy.co/9kP6gxGI1.mp4"
-    },
-    {
-      "id": "test777",
-      "cdn": "https://cdn.videy.co/test777.mp4"
-    },
-    {
-      "id": "coba123",
-      "cdn": "https://cdn.videy.co/LPgjtiTV1.mp4"
-    },
-    {
-      "id": "2Loz2QIWmp4",
-      "cdn": "https://cdn.videy.co/2Doz2QIm1.mp4"
-    },
-    {
-      "id": "2Lo2IW.mp4",
-      "cdn": "https://cdn.videy.co/4g5fRGET1.mp4"
-    }
-  ]
+  "id": "2Lo2NW.mp4",
+  "cdn": "https://cdn.videy.co/TrRqoIwC1.mp4"
+},
+{
+  "id": "5Jo7IX.mp4",
+  "cdn": "https://cdn.videy.co/9kP6gxGI1.mp4"
+},
+{
+  "id": "7Po1IW.mp4",
+  "cdn": "https://cdn.videy.co/ntZhxxFw1.mp4"
+},
+{
+  "id": "JShNIQ.mp4",
+  "cdn": "https://cdn.videy.co/4g5fRGET1.mp4"
 }
