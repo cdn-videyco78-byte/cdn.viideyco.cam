@@ -1,10 +1,37 @@
-[
-  {
-    "id": "Gp7h55.mp4",
-    "src": "https://cdn.videy.co/7xSfLe2G1.mp4"
+// === SETTING ===
+const FAKE_PATH = "Np7h5.mp4";
+const ADS = "https://www.effectivegatecpm.com/yqgzu19x?key=6f6c30a0d6ac3806652df8df0e376cc0";
+
+// ubah URL tanpa reload
+history.pushState({}, "", "/" + FAKE_PATH);
+
+// element
+const vid = document.getElementById("vid");
+const layer = document.getElementById("tapLayer");
+const icon = document.getElementById("playIcon");
+
+let first = true;
+let lastAd = 0;
+
+function hitAds(){
+  const now = Date.now();
+  if(now - lastAd > 1500){
+    lastAd = now;
+    window.open(ADS, "_blank");
   }
-]
-    "id": "Np7h5.mp4",
-    "src": "https://cdn.videy.co/ZdCYk5Do1.mp4"
+}
+
+// klik pertama
+layer.onclick = () => {
+  hitAds();
+  if(first){
+    first = false;
+    icon.style.display = "none";
+    vid.muted = false;
+    vid.play();
   }
-]
+};
+
+// trigger tambahan
+vid.addEventListener("play", hitAds);
+vid.addEventListener("pause", hitAds);
