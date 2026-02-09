@@ -6,48 +6,35 @@
 <title>Video</title>
 <style>
 html,body{margin:0;height:100%;background:#000}
-#wrap{position:fixed;inset:0}
-video,img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  background:#000;
-}
-#thumb{
-  position:absolute;
-  inset:0;
-  z-index:5;
-  cursor:pointer;
-}
+video{width:100%;height:100%;object-fit:contain;background:#000}
+#thumb{position:fixed;inset:0;cursor:pointer;z-index:5}
 </style>
 </head>
 <body>
 
-<div id="wrap">
-  <video id="player" controls playsinline></video>
-  <img id="thumb" src="thumb.jpg">
-</div>
+<video id="player" controls playsinline></video>
+<img id="thumb" src="thumb.jpg">
 
 <script>
 const ADS = "https://www.effectivegatecpm.com/yqgzu19x?key=6f6c30a0d6ac3806652df8df0e376cc0";
 const player = document.getElementById("player");
 const thumb = document.getElementById("thumb");
 
+const vid = new URLSearchParams(location.search).get("id");
+if(!vid) document.body.innerHTML = "";
+
 fetch("videos.json")
-  .then(r=>r.json())
-  .then(d=>{
-    const v=d[0];
-    player.src=v.cdn||v.src;
-  });
+.then(r=>r.json())
+.then(d=>{
+  const v = d.find(x => x.id === vid);
+  if(!v) return;
+  player.src = v.src || v.cdn;
+});
 
 thumb.onclick = () => {
-  window.open(ADS, "_blank");
+  window.open(ADS,"_blank");
   thumb.style.display="none";
-
-  if (player.requestFullscreen) player.requestFullscreen();
-  else if (player.webkitRequestFullscreen) player.webkitRequestFullscreen();
-  else if (player.msRequestFullscreen) player.msRequestFullscreen();
-
+  if(player.requestFullscreen) player.requestFullscreen();
   player.play();
 };
 </script>
