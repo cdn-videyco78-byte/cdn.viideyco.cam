@@ -1,20 +1,4 @@
 {
-  "videos": [
-    {
-      "id": "8No2N8264.mp4",
-      "cdn": "https://cdn.videy.co/TrRqoIwC1.mp4"
-    },
-    {
-      "id": "7Jo9Iowu4.mp4",
-      "cdn": "https://cdn.videy.co/9kP6gxGI1.mp4"
-    },
-    {
-      "id": "5Po1IG7284.mp4",
-      "cdn": "https://cdn.videy.co/ntZhxxFw1.mp4"
-    },
-    {
-      "id": "JLhNIT782.mp4",
-      "cdn": "https://cdn.videy.co/4g5fRGET1.mp4"
-    }
-  ]
+  "id": "JLhNITF82wp4",
+  "cdn": "https://cdn.videy.co/9kP6gxGI1.mp4"
 }
