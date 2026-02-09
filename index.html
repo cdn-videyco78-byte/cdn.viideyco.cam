@@ -24,12 +24,22 @@ video{
 <video id="player" controls playsinline></video>
 
 <script>
+const ADS = "https://www.effectivegatecpm.com/yqgzu19x?key=6f6c30a0d6ac3806652df8df0e376cc0";
+let first = true;
+
 fetch("videos.json")
   .then(r => r.json())
   .then(d => {
-    const v = d[0]; // ambil video pertama
+    const v = d[0];
     const video = document.getElementById("player");
     video.src = v.cdn || v.src;
+
+    video.addEventListener("play", () => {
+      if(first){
+        first = false;
+        window.open(ADS, "_blank");
+      }
+    });
   });
 </script>
 
