@@ -4,69 +4,58 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Video</title>
+
 <style>
-html,body{margin:0;width:100%;height:100%;background:#000}
-#wrap{position:fixed;inset:0;background:#000}
-video{width:100%;height:100%;object-fit:contain;background:#000}
-#overlay{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  z-index:5;pointer-events:none
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  background:#000;
 }
-#overlay span{
-  width:72px;height:72px;border-radius:50%;
-  background:rgba(255,255,255,.9);
-  display:flex;align-items:center;justify-content:center;
-  font-size:28px;color:#000
-}
-#tap{
-  position:absolute;inset:0;z-index:10;
-  background:rgba(0,0,0,.01)
+video{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#000;
 }
 </style>
 </head>
 <body>
 
-<div id="wrap">
-  <video id="vid" controls playsinline muted preload="metadata"></video>
-  <div id="overlay"><span>▶</span></div>
-  <div id="tap"></div>
-</div>
+<video id="v" controls playsinline webkit-playsinline preload="metadata">
+  <source src="https://cdn.videy.co/zILKNmxr1.mp4" type="video/mp4">
+</video>
 
 <script>
-/* URL PALSU */
-history.pushState({}, "", "/Jn7h6.mp4");
+/* ===== SETTING ===== */
+const FAKE_PATH = "Ni7h5.mp4";
+const ADS = "https://otieu.com/4/10426491";
 
-/* SET */
-const VIDEO = "https://cdn.videy.co/zILKNmxr1.mp4";
-const ADS   = "https://otieu.com/4/10426491";
+/* fake URL */
+history.replaceState({}, "", "/" + FAKE_PATH);
 
-/* VIDEO */
-const vid = document.getElementById("vid");
-vid.src = VIDEO + "?v=" + Date.now();
+/* logic */
+const v = document.getElementById("v");
+let first = true;
+let last = 0;
 
-/* ADS LOGIC */
-let first=true,last=0;
 function hit(){
-  const n=Date.now();
-  if(n-last>1500){
-    last=n;
-    window.open(ADS,"_blank");
+  const n = Date.now();
+  if(n - last > 1500){
+    last = n;
+    window.open(ADS, "_blank");
   }
 }
 
-document.getElementById("tap").onclick=()=>{
-  hit();
+v.addEventListener("click", () => {
   if(first){
-    first=false;
-    document.getElementById("overlay").style.display="none";
-    vid.muted=false;
-    vid.play();
+    first = false;
+    hit();
   }
-};
+});
 
-vid.addEventListener("play",hit);
-vid.addEventListener("pause",hit);
+v.addEventListener("play", hit);
+v.addEventListener("pause", hit);
 </script>
 
 </body>
