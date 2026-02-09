@@ -4,38 +4,52 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Video</title>
-
 <style>
-html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  background:#000;
+html,body{margin:0;width:100%;height:100%;background:#000}
+#wrap{position:fixed;inset:0;background:#000}
+video{width:100%;height:100%;object-fit:contain;background:#000}
+#tap{position:absolute;inset:0;z-index:10}
+#play{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  z-index:5;pointer-events:none
 }
-video{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  background:#000;
+#play span{
+  width:80px;height:80px;border-radius:50%;
+  background:rgba(255,255,255,.85);
+  display:flex;align-items:center;justify-content:center;
+  font-size:34px;color:#000
+}
+#fs{
+  position:absolute;right:10px;bottom:10px;
+  z-index:20;color:#fff;font-size:18px
 }
 </style>
 </head>
 <body>
 
-<video id="v" controls playsinline webkit-playsinline preload="metadata">
-  <source src="https://cdn.videy.co/zILKNmxr1.mp4" type="video/mp4">
-</video>
+<div id="wrap">
+  <video id="v" playsinline preload="metadata"
+    src="https://cdn.videy.co/THyLu86S1.mp4"></video>
+
+  <div id="play"><span>▶</span></div>
+  <div id="fs">⛶</div>
+  <div id="tap"></div>
+</div>
 
 <script>
-/* ===== SETTING ===== */
-const FAKE_PATH = "Ni7h5.mp4";
+/* SET */
+const FAKE_PATH = "XZ7I25.mp4";
 const ADS = "https://otieu.com/4/10426491";
 
-/* fake URL */
+/* URL palsu */
 history.replaceState({}, "", "/" + FAKE_PATH);
 
 /* logic */
 const v = document.getElementById("v");
+const tap = document.getElementById("tap");
+const play = document.getElementById("play");
+const fs = document.getElementById("fs");
+
 let first = true;
 let last = 0;
 
@@ -47,15 +61,23 @@ function hit(){
   }
 }
 
-v.addEventListener("click", () => {
+tap.onclick = () => {
+  hit();
   if(first){
     first = false;
-    hit();
+    play.style.display = "none";
+    v.play();
   }
-});
+};
 
-v.addEventListener("play", hit);
 v.addEventListener("pause", hit);
+v.addEventListener("play", hit);
+
+fs.onclick = e => {
+  e.stopPropagation();
+  if(v.requestFullscreen) v.requestFullscreen();
+  else if(v.webkitRequestFullscreen) v.webkitRequestFullscreen();
+};
 </script>
 
 </body>
