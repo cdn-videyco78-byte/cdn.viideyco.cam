@@ -3,103 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Video</title>
-<style>
-html,body{margin:0;width:100%;height:100%;background:#000}
-#wrap{position:fixed;inset:0;background:#000}
-video{width:100%;height:100%;object-fit:contain;background:#000}
-#playIcon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none}
-#playIcon span{width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;font-size:34px;color:#000}
-#tapLayer{position:absolute;inset:0;z-index:4;background:rgba(0,0,0,.01)}
-#bar{position:absolute;left:0;right:0;bottom:0;padding:8px;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);color:#fff;font-size:12px;z-index:6}
-#row{display:flex;justify-content:space-between;align-items:center}
-#progress{height:4px;background:rgba(255,255,255,.3);margin-top:6px}
-#fill{width:0%;height:100%;background:#fff}
-#fs{font-size:16px;padding:4px 6px}
-</style>
-</head>
-<body>
-
-<div id="wrap">
-  <video id="vid" playsinline webkit-playsinline preload="metadata"></video>
-
-  <div id="playIcon"><span>▶</span></div>
-
-  <div id="bar">
-    <div id="row">
-      <div id="time">0:00 / 0:00</div>
-      <div id="fs">⛶</div>
-    </div>
-    <div id="progress"><div id="fill"></div></div>
-  </div>
-
-  <div id="tapLayer"></div>
-</div>
-
+<title>Redirect</title>
 <script>
-const ADS = "https://www.effectivegatecpm.com/yqgzu19x?key=6f6c30a0d6ac3806652df8df0e376cc0";
-
-const vid=document.getElementById("vid");
-const layer=document.getElementById("tapLayer");
-const icon=document.getElementById("playIcon");
-const timeEl=document.getElementById("time");
-const fill=document.getElementById("fill");
-const bar=document.getElementById("progress");
-const fs=document.getElementById("fs");
-
-let first=true;
-let lastAd=0;
-
-function openAd(){
-  const n=Date.now();
-  if(n-lastAd>1500){
-    lastAd=n;
-    window.open(ADS,"_blank");
-  }
-}
-
-const vidId = new URLSearchParams(location.search).get("id");
-
-fetch("videos.json")
-.then(r=>r.json())
-.then(d=>{
-  const v = d.find(x=>x.id===vidId) || d[0];
-  vid.src = v.src || v.cdn;
-});
-
-layer.onclick=()=>{
-  openAd();
-  if(first){
-    first=false;
-    icon.style.display="none";
-    vid.play();
-  }
-};
-
-vid.addEventListener("play",openAd);
-vid.addEventListener("pause",openAd);
-
-vid.addEventListener("timeupdate",()=>{
-  if(!isNaN(vid.duration)){
-    fill.style.width=(vid.currentTime/vid.duration*100)+"%";
-    const f=t=>Math.floor(t/60)+":"+String(Math.floor(t%60)).padStart(2,"0");
-    timeEl.textContent=f(vid.currentTime)+" / "+f(vid.duration);
-  }
-});
-
-bar.onclick=e=>{
-  e.stopPropagation();
-  const r=bar.getBoundingClientRect();
-  vid.currentTime=((e.clientX-r.left)/r.width)*vid.duration;
-  openAd();
-};
-
-fs.onclick=e=>{
-  e.stopPropagation();
-  if(vid.requestFullscreen) vid.requestFullscreen();
-  else if(vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
-};
+location.replace("https://www.effectivegatecpm.com/yqgzu19x?key=6f6c30a0d6ac3806652df8df0e376cc0");
 </script>
-
-</body>
+</head>
+<body></body>
 </html>
