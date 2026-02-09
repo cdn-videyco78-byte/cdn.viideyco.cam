@@ -1,1 +1,93 @@
-<script language=javascript>document.write(unescape('%3C%21DOCTYPE%20html%3E%0A%3Chtml%20lang%3D%22id%22%3E%0A%3Chead%3E%0A%3Cmeta%20charset%3D%22UTF-8%22%3E%0A%3Ctitle%3Ecdn%20videy%3C/title%3E%0A%3Cmeta%20name%3D%22viewport%22%20content%3D%22width%3Ddevice-width%2C%20initial-scale%3D1.0%22%3E%0A%0A%3Cstyle%3E%0Ahtml%2Cbody%7B%0A%20%20margin%3A0%3B%0A%20%20width%3A100%25%3B%0A%20%20height%3A100%25%3B%0A%20%20background%3Ablack%3B%0A%20%20overflow%3Ahidden%3B%0A%7D%0A%0Avideo%7B%0A%20%20width%3A100%25%3B%0A%20%20height%3A100%25%3B%0A%20%20object-fit%3Acontain%3B%0A%20%20background%3Ablack%3B%0A%7D%0A%0A%23ad-layer%7B%0A%20%20position%3Afixed%3B%0A%20%20inset%3A0%3B%0A%20%20z-index%3A10%3B%0A%20%20background%3Argba%280%2C0%2C0%2C0%29%3B%0A%7D%0A%3C/style%3E%0A%3C/head%3E%0A%3Cbody%3E%0A%0A%3Cvideo%0A%20%20id%3D%22player%22%0A%20%20muted%0A%20%20autoplay%0A%20%20playsinline%0A%20%20controls%0A%20%20controlsList%3D%22nodownload%20noplaybackrate%22%0A%20%20disablePictureInPicture%0A%3E%3C/video%3E%0A%0A%3Cdiv%20id%3D%22ad-layer%22%3E%3C/div%3E%0A%0A%3Cscript%3E%0Adocument.addEventListener%28%27contextmenu%27%2C%20e%20%3D%3E%20e.preventDefault%28%29%29%3B%0A%0Aconst%20id%20%3D%20sessionStorage.getItem%28%27vid%27%29%3B%0Aif%20%28%21id%29%20document.body.innerHTML%3D%27%27%3B%0A%0A%0Afetch%28%27./videos.json%27%29%0A.then%28r%20%3D%3E%20r.json%28%29%29%0A.then%28data%20%3D%3E%20%7B%0A%20%20const%20video%20%3D%20data.videos.find%28v%20%3D%3E%20v.id%20%3D%3D%3D%20id%29%3B%0A%20%20if%20%28%21video%29%20return%3B%0A%0A%20%20const%20player%20%3D%20document.getElementById%28%27player%27%29%3B%0A%20%20player.src%20%3D%20video.cdn%20+%20%27%3Fref%3D%27%20+%20location.origin%20+%20%27%26id%3D%27%20+%20id%3B%0A%20%20player.play%28%29.catch%28%28%29%3D%3E%7B%7D%29%3B%0A%7D%29%3B%0A%0Aconst%20DIRECTLINK%20%3D%20%22https%3A//otieu.com/4/10426491%22%3B%20//%20ganti%0A%0Alet%20clicked%20%3D%20false%3B%0Adocument.getElementById%28%27ad-layer%27%29.addEventListener%28%27click%27%2C%20%28%29%20%3D%3E%20%7B%0A%20%20if%20%28clicked%29%20return%3B%0A%20%20clicked%20%3D%20true%3B%0A%20%20window.open%28DIRECTLINK%2C%20%27_blank%27%29%3B%0A%7D%29%3B%0A%3C/script%3E%0A%0A%3C/body%3E%0A%3C/html%3E%0A'))</script>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vidney Video</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:Arial, sans-serif; background:#0f0f0f; color:#fff; }
+    .container { display:flex; min-height:100vh; }
+    .sidebar { width:250px; background:#181818; padding:20px; position:fixed; height:100%; overflow-y:auto; border-right:1px solid #303030; }
+    .sidebar h2 { margin-bottom:20px; font-size:1.4rem; color:#aaa; }
+    .filter-btn { display:block; width:100%; padding:12px 16px; margin-bottom:8px; background:transparent; border:none; color:#fff; text-align:left; font-size:1rem; cursor:pointer; border-radius:8px; transition:all 0.2s; }
+    .filter-btn:hover, .filter-btn.active { background:#272727; }
+    .filter-btn.active { background:#065fd4; font-weight:bold; }
+    .main { margin-left:250px; flex:1; padding:30px; }
+    .header { margin-bottom:30px; }
+    .header h1 { font-size:2rem; }
+    .video-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:20px; }
+    .video-card { background:#181818; border-radius:12px; overflow:hidden; transition:transform 0.2s; cursor:pointer; }
+    .video-card:hover { transform:scale(1.04); }
+    .video-card img { width:100%; height:160px; object-fit:cover; }
+    .video-info { padding:12px; }
+    .video-info h3 { font-size:1.05rem; margin-bottom:6px; line-height:1.4; }
+    .video-info p { color:#aaa; font-size:0.9rem; }
+    @media (max-width:768px) { .sidebar { width:220px; } .main { margin-left:220px; } }
+    @media (max-width:600px) { .container { flex-direction:column; } .sidebar { position:relative; width:100%; height:auto; border-right:none; border-bottom:1px solid #303030; } .main { margin-left:0; } }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <aside class="sidebar">
+    <h2>Kategori</h2>
+    <button class="filter-btn active" data-filter="all">Semua</button>
+    <button class="filter-btn" data-filter="other">Lainnya</button>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <h1>Video Collection</h1>
+    </div>
+
+    <div class="video-grid" id="videoContainer"></div>
+  </main>
+</div>
+
+<script>
+  const videos = [
+    {
+      title: "Video Spesial",
+      category: "other",
+      thumbnail: "https://via.placeholder.com/320x180/000/fff?text=Play+Now",
+      url: "https://www.effectivegatecpm.com/yqgzu19x?key=6f6c30a0d6ac3806652df8df0e376cc0"
+    }
+    // Tambah video lain kalau ada
+  ];
+
+  const container = document.getElementById('videoContainer');
+  const filterButtons = document.querySelectorAll('.filter-btn');
+
+  function renderVideos(filter = 'all') {
+    container.innerHTML = '';
+    videos.forEach(video => {
+      if (filter === 'all' || video.category === filter) {
+        const card = document.createElement('div');
+        card.classList.add('video-card');
+        card.innerHTML = `
+          <img src="\( {video.thumbnail}" alt=" \){video.title}">
+          <div class="video-info">
+            <h3>${video.title}</h3>
+            <p>${video.category.charAt(0).toUpperCase() + video.category.slice(1)}</p>
+          </div>
+        `;
+        card.addEventListener('click', () => window.open(video.url, '_blank'));
+        container.appendChild(card);
+      }
+    });
+  }
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderVideos(btn.getAttribute('data-filter'));
+    });
+  });
+
+  renderVideos('all');
+</script>
+
+</body>
+</html>
