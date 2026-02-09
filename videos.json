@@ -1,15 +1,12 @@
-{
-  "id": "JLhNITF81wp4",
-  "cdn": "https://cdn.videy.co/9kP6gxGI1.mp4"
-}
 [
   {
-    "id": "v_8hHLhs98_01",
-    "title": "Video",
+    "id": "JLhNITF81wp4",
+    "cdn": "https://cdn.videy.co/9kP6gxGI1.mp4"
+  },
+  {
+    "id": "8hHLhs98",
     "src": "https://videy.co/v/?id=7xSfLe2G1"
-  }
-]
-[
+  },
   {
     "id": "97mHki80",
     "src": "https://cdn.videy.co/7xSfLe2G1.mp4"
