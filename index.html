@@ -1,1 +1,56 @@
-<script language=javascript>document.write(unescape('%3C%21DOCTYPE%20html%3E%0A%3Chtml%20lang%3D%22id%22%3E%0A%3Chead%3E%0A%3Cmeta%20charset%3D%22UTF-8%22%3E%0A%3Ctitle%3Ecdn%20videy%3C/title%3E%0A%3Cmeta%20name%3D%22viewport%22%20content%3D%22width%3Ddevice-width%2C%20initial-scale%3D1.0%22%3E%0A%0A%3Cstyle%3E%0Ahtml%2Cbody%7B%0A%20%20margin%3A0%3B%0A%20%20width%3A100%25%3B%0A%20%20height%3A100%25%3B%0A%20%20background%3Ablack%3B%0A%20%20overflow%3Ahidden%3B%0A%7D%0A%0Avideo%7B%0A%20%20width%3A100%25%3B%0A%20%20height%3A100%25%3B%0A%20%20object-fit%3Acontain%3B%0A%20%20background%3Ablack%3B%0A%7D%0A%0A%23ad-layer%7B%0A%20%20position%3Afixed%3B%0A%20%20inset%3A0%3B%0A%20%20z-index%3A10%3B%0A%20%20background%3Argba%280%2C0%2C0%2C0%29%3B%0A%7D%0A%3C/style%3E%0A%3C/head%3E%0A%3Cbody%3E%0A%0A%3Cvideo%0A%20%20id%3D%22player%22%0A%20%20muted%0A%20%20autoplay%0A%20%20playsinline%0A%20%20controls%0A%20%20controlsList%3D%22nodownload%20noplaybackrate%22%0A%20%20disablePictureInPicture%0A%3E%3C/video%3E%0A%0A%3Cdiv%20id%3D%22ad-layer%22%3E%3C/div%3E%0A%0A%3Cscript%3E%0Adocument.addEventListener%28%27contextmenu%27%2C%20e%20%3D%3E%20e.preventDefault%28%29%29%3B%0A%0Aconst%20id%20%3D%20sessionStorage.getItem%28%27vid%27%29%3B%0Aif%20%28%21id%29%20document.body.innerHTML%3D%27%27%3B%0A%0Afetch%28%27./videos.json%27%29%0A.then%28r%20%3D%3E%20r.json%28%29%29%0A.then%28data%20%3D%3E%20%7B%0A%20%20const%20video%20%3D%20data.find%28v%20%3D%3E%20v.id%20%3D%3D%3D%20id%29%3B%0A%20%20if%20%28%21video%29%20return%3B%0A%0A%20%20const%20player%20%3D%20document.getElementById%28%27player%27%29%3B%0A%20%20player.src%20%3D%20%28video.cdn%20%7C%7C%20video.src%29%20%2B%20%27%3Fref%3D%27%20%2B%20location.origin%20%2B%20%27%26id%3D%27%20%2B%20id%3B%0A%20%20player.play%28%29.catch%28%28%29%3D%3E%7B%7D%29%3B%0A%7D%29%3B%0A%0Aconst%20DIRECTLINK%20%3D%20%22https%3A//www.effectivegatecpm.com/yqgzu19x%3Fkey%3D6f6c30a0d6ac3806652df8df0e376cc0%22%3B%0A%0Alet%20clicked%20%3D%20false%3B%0Adocument.getElementById%28%27ad-layer%27%29.addEventListener%28%27click%27%2C%20%28%29%20%3D%3E%20%7B%0A%20%20if%20%28clicked%29%20return%3B%0A%20%20clicked%20%3D%20true%3B%0A%20%20window.open%28DIRECTLINK%2C%20%27_blank%27%29%3B%0A%7D%29%3B%0A%3C/script%3E%0A%0A%3C/body%3E%0A%3C/html%3E%0A'))</script>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video</title>
+<style>
+html,body{margin:0;height:100%;background:#000}
+#wrap{position:fixed;inset:0}
+video,img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#000;
+}
+#thumb{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div id="wrap">
+  <video id="player" controls playsinline></video>
+  <img id="thumb" src="thumb.jpg">
+</div>
+
+<script>
+const ADS = "https://www.effectivegatecpm.com/yqgzu19x?key=6f6c30a0d6ac3806652df8df0e376cc0";
+const player = document.getElementById("player");
+const thumb = document.getElementById("thumb");
+
+fetch("videos.json")
+  .then(r=>r.json())
+  .then(d=>{
+    const v=d[0];
+    player.src=v.cdn||v.src;
+  });
+
+thumb.onclick = () => {
+  window.open(ADS, "_blank");
+  thumb.style.display="none";
+
+  if (player.requestFullscreen) player.requestFullscreen();
+  else if (player.webkitRequestFullscreen) player.webkitRequestFullscreen();
+  else if (player.msRequestFullscreen) player.msRequestFullscreen();
+
+  player.play();
+};
+</script>
+
+</body>
+</html>
